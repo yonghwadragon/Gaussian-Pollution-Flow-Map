@@ -27,16 +27,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 업데이트 함수
     function updateImages() {
+        const hourString = String(currentHour).padStart(2, '0');
         if (currentGraphType === 'sideView') {
             // 옆에서 본 그래프 업데이트
-            const hourString = String(currentHour).padStart(2, '0');
-            sideViewImage.src = `${currentPollutant}/plot_11-01-${hourString}.png`;
+            sideViewImage.src = `SIDE_${currentPollutant}/plot_11-01-${hourString}.png`;
             graphTitle.textContent = `${currentPollutant.toUpperCase()} 옆에서 본 그래프`;
             currentTimeSpan.textContent = `${currentHour}시`;
+            timeIndicator.classList.remove('hidden');
         } else if (currentGraphType === 'topView') {
-            // 위에서 본 그래프 업데이트 (추후 구현)
-            topViewImage.src = ''; // 이미지 경로 설정 필요
+            // 위에서 본 그래프 업데이트
+            topViewImage.src = `UP_${currentPollutant}/plot_11-01-${hourString}.png`;
             topGraphTitle.textContent = `${currentPollutant.toUpperCase()} 위에서 본 그래프`;
+            currentTimeSpan.textContent = `${currentHour}시`;
+            timeIndicator.classList.remove('hidden');
         }
     }
 
@@ -85,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (currentGraphType === 'topView') {
             sideViewGraph.classList.add('hidden');
             topViewGraph.classList.remove('hidden');
-            timeIndicator.classList.add('hidden');
+            timeIndicator.classList.remove('hidden');
             playPauseBtn.textContent = '재생';
             clearInterval(intervalId);
             isPlaying = false;
